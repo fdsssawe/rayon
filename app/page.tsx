@@ -1,9 +1,11 @@
 import Image from "next/image";
 import hero from "../assets/hero.svg";
+import MapContainer from "@/components/MapContainer";
 
 export default function Home() {
   return (
-    <div className="h-[90vh] w-full flex text-text">
+    <div className="h-full w-full flex text-text flex-col items-center">
+      <div className="w-full flex flex-row">
       <div className="h-full w-full flex justify-center items-center flex-col">
         <div className="lg:ml-10">
         <h1 className="text-[4.8rem] font-[700] leading-[4rem]">Trade Skills <br/>Build <p className="bg-gradient-to-r from-primary via-accent to-secondary inline-block text-transparent bg-clip-text leading-[7rem]">Community</p></h1>
@@ -17,6 +19,8 @@ export default function Home() {
       <div className="h-full w-full items-start lg:mt-10 flex">
         <Image src={hero} alt="Hero Image" className="" />
       </div>
+      </div>
+      <MapContainer/>
     </div>
   );
 }

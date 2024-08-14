@@ -1,7 +1,9 @@
+"use client";
+
 import React, { useRef, useEffect } from 'react';
 import mapboxgl from 'mapbox-gl';
 
-mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN!;
+mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_API_KEY!;
 
 interface MapProps {
   center: [number, number];
@@ -10,23 +12,25 @@ interface MapProps {
 
 const Map: React.FC<MapProps> = ({ center, zoom }) => {
   const mapContainer = useRef<HTMLDivElement | null>(null);
+  const mapInstance = useRef<mapboxgl.Map | null>(null);
 
   useEffect(() => {
-    if (mapContainer.current) {
+    if (mapContainer.current && !mapInstance.current) {
       const map = new mapboxgl.Map({
         container: mapContainer.current,
         style: 'mapbox://styles/mapbox/streets-v11',
         center,
         zoom,
+        scrollZoom: false, // Disable scroll zoom
       });
 
       new mapboxgl.Marker().setLngLat(center).addTo(map);
 
-      return () => map.remove();
+      mapInstance.current = map;
     }
   }, [center, zoom]);
 
-  return <div ref={mapContainer} style={{ width: '100%', height: '400px' }} />;
+  return <div ref={mapContainer} className="map-container" />;
 };
 
 export default Map;
